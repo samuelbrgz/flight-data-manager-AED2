@@ -1,2 +1,2 @@
-# projeto-aed2
-Projeto final da disciplina de Algoritmos e Estruturas de Dados 2
+# Grupo-Transporte-Aereo
+Projeto Final de AED2 - Alunos: Luciano Tadeu, Matheus Mesquita, Samuel Borges e João Ennes
