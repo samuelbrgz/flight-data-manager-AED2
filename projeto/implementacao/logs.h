@@ -1,0 +1,59 @@
+#ifndef LOGS_H
+#define LOGS_H
+#include <stdbool.h>
+
+// indica qual tipo de log será printado
+typedef enum {
+    AUTENTICACAO,
+    ADD_ITEM,
+    LIS_ITEM,
+    PESQ_ITEM,
+    EDIT_ITEM,
+    EXC_ITEM,
+    ENCERRAR
+} LOG_TIPOS;
+
+typedef struct {
+    char usuario[50];
+    bool status; // indica se a tentativa de login foi bem sucedida
+} LOG_TIPO_AUTENTICACAO;
+
+typedef struct {
+    // struct do item
+    bool status; // indica se o item foi adicionado com, ou sem sucesso
+} LOG_TIPO_ADD_ITEM;
+
+// typedef struct {
+//     // não possui requisitos para printar
+// } LOG_TIPO_LIS_ITEM;
+
+typedef struct {
+    int id;
+    bool status; // caso o item pesquisado seja encontrado
+} LOG_TIPO_PESQ_ITEM;
+
+typedef struct {
+    // struct do item antes da edição
+    // struct do item depois da edição
+} LOG_TIPO_EDIT_ITEM;
+
+typedef struct {
+    int id;
+    bool status; // indica se o item foi excluído com, ou sem sucesso
+} LOG_TIPO_EXC_ITEM;3
+
+// typedef struct {
+//     // não possui requisitos para printar
+// } LOG_TIPO_ENCERRAR;
+
+typedef union {
+    LOG_TIPO_AUTENTICACAO info_auth;
+    LOG_TIPO_ADD_ITEM info_add;
+    LOG_TIPO_PESQ_ITEM info_pesq;
+    LOG_TIPO_EDIT_ITEM info_edit;
+    LOG_TIPO_EXC_ITEM info_exc;
+} LOG_DADOS;
+
+void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS *dados);
+
+#endif
