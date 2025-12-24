@@ -14,7 +14,6 @@ typedef enum {
 } LOG_TIPOS;
 
 typedef struct {
-    char usuario[50];
     bool status; // indica se a tentativa de login foi bem sucedida
 } LOG_TIPO_AUTENTICACAO;
 
@@ -33,14 +32,13 @@ typedef struct {
 } LOG_TIPO_PESQ_ITEM;
 
 typedef struct {
-    // struct do item antes da edição
-    // struct do item depois da edição
+    int id; // id do item a ser modificado
 } LOG_TIPO_EDIT_ITEM;
 
 typedef struct {
     int id;
     bool status; // indica se o item foi excluído com, ou sem sucesso
-} LOG_TIPO_EXC_ITEM;3
+} LOG_TIPO_EXC_ITEM;
 
 // typedef struct {
 //     // não possui requisitos para printar
@@ -54,6 +52,6 @@ typedef union {
     LOG_TIPO_EXC_ITEM info_exc;
 } LOG_DADOS;
 
-void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS *dados);
+void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados);
 
 #endif

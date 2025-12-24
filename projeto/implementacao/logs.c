@@ -4,7 +4,7 @@
 #include <time.h>
 #include "logs.h"
 
-void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS *dados) {
+void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
     FILE *arquivo = fopen("../dados/logs.csv", "a");
 
     char tempoFormatado[50];
@@ -26,12 +26,23 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS *dados) {
     );
     
     switch (tipo) {
+        case AUTENTICACAO:
+            // verificação se o login foi realizado com sucesso
+            if (dados.info_auth.status) {
+                snprintf(msg, sizeof(msg), "O usuário logou-se como \"%s\" com sucesso!\n", usuario);
+            } else {
+                snprintf(msg, sizeof(msg), "Houve uma tentativa de login como \"%s\", porém sem sucesso.\n", usuario);
+            };
+            break;
         case LIS_ITEM: 
             snprintf(msg, sizeof(msg), "O usuário %s listou todos os itens.\n", usuario);
-            printf("[%s] %s", tempoFormatado, msg);
             break;
-        }
+    }
+
+    printf("[%s] %s", tempoFormatado, msg);
         
+    // o log será armazenado no seguinte formato .csv
+    // [data],[mensagem do log]
     fprintf(arquivo, "%s,%s", tempoFormatado, msg);
     fclose(arquivo);
 };
