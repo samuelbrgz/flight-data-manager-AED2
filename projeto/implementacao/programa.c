@@ -1,17 +1,13 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include "login.h"
+#include "autenticacao.h"
 
 int main(){
     
     bool verificar;
-
     do
     {
-        verificar = login();
-        if(verificar == true){
-            printf("Deu CERTO!");
-        }
+        verificar = login(); //função de autenticação em autenticacao.c
     } while (!verificar);
 
 }

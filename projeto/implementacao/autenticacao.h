@@ -6,7 +6,7 @@
 typedef struct {
     char login[TAM];
     char senha[TAM];
-} Usuario;
+} Usuario; // declaração da struct que armazenará os dados digitados pelo usuário e lidos no csv
 
 bool login(void);
 
