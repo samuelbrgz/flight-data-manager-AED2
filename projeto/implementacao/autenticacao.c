@@ -19,7 +19,7 @@ Validar login(){
     digitado.senha[strcspn(digitado.senha, "\r\n")] = '\0';
     strcpy(validar.usuario, digitado.login);
 
-    FILE *fp = fopen("..\\dados\\usuarios.csv", "r"); // arquivo csv está em outra pasta
+    FILE *fp = fopen("../dados/usuarios.csv", "r"); // arquivo csv está em outra pasta
     if (!fp) {
         printf("Erro ao abrir o arquivo para leitura.\n");
         return validar;
