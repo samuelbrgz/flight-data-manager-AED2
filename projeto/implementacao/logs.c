@@ -1,6 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <time.h>
 #include "logs.h"
 
@@ -39,7 +37,8 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
             break;
     }
 
-    printf("[%s] %s", tempoFormatado, msg);
+    // opção para printar no terminal (opcional)
+    // printf("[%s] %s", tempoFormatado, msg);
         
     // o log será armazenado no seguinte formato .csv
     // [data],[mensagem do log]

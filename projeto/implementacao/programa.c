@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "autenticacao.h"
+#include "logs.h"
 
 int main(){
     
-    bool verificar;
+    Validar usuario; // puxar o usuário da sessão por aqui
     do
     {
-        verificar = login(); //função de autenticação em autenticacao.c
-    } while (!verificar);
+        usuario = login(); //função de autenticação em autenticacao.c
+    } while (!usuario.status);
 
 }

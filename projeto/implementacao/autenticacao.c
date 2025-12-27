@@ -2,13 +2,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include "autenticacao.h"
+#include "logs.h"
 
-bool login(){
-
-    bool verificar = false; // variável de apoio para identificar se digitou o login correto
+Validar login(){
 
     Usuario digitado;
     Usuario arquivo;
+    Validar validar; // variável de apoio para identificar se digitou o login correto e retornar o usuario
+    validar.status = false;
 
     printf("Digite seu login: ");
     fgets(digitado.login, sizeof(digitado.login), stdin);
@@ -16,11 +17,12 @@ bool login(){
     printf("Digite sua senha: ");
     fgets(digitado.senha, sizeof(digitado.senha), stdin);
     digitado.senha[strcspn(digitado.senha, "\r\n")] = '\0';
+    strcpy(validar.usuario, digitado.login);
 
-    FILE *fp = fopen("..\\dados\\usuarios.csv", "r"); // arquivo csv está em outra pasta
+    FILE *fp = fopen("../dados/usuarios.csv", "r"); // arquivo csv está em outra pasta
     if (!fp) {
         printf("Erro ao abrir o arquivo para leitura.\n");
-        return false;
+        return validar;
     }
     
     char linha[120];
@@ -29,19 +31,21 @@ bool login(){
         sscanf(linha, "%49[^,],%49s", arquivo.login, arquivo.senha);
 
         if (strcmp(digitado.login, arquivo.login) == 0 && strcmp(digitado.senha, arquivo.senha) == 0) {
-            verificar = true;
+            validar.status = true;
         }
     }
 
-    if (verificar == false)
+    if (validar.status == false)
     {
         printf("\nLogin ou senha incorretos...\n");
+        registrarLog(validar.usuario, AUTENTICACAO, (LOG_DADOS){.info_auth = validar.status});
     }
     else
     {
         printf("\n%s entrou no sistema!\n", digitado.login);
+        registrarLog(validar.usuario, AUTENTICACAO, (LOG_DADOS){.info_auth = validar.status});
     }
 
     fclose(fp);
-    return verificar; // para poder finalizar o laço de repetição no programa principal.
+    return validar; // para poder finalizar o laço de repetição no programa principal.
 }
