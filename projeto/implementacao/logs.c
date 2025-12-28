@@ -35,6 +35,9 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
         case LIS_ITEM: 
             snprintf(msg, sizeof(msg), "O usuário %s listou todos os itens.\n", usuario);
             break;
+        case ENCERRAR:
+            snprintf(msg, sizeof(msg), "O usuário %s encerrou o programa.\n", usuario);
+            break;
     }
 
     // opção para printar no terminal (opcional)
