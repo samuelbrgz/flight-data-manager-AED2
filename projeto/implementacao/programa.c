@@ -1,14 +1,71 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "autenticacao.h"
 #include "logs.h"
 
-int main(){
-    
+int main(void)
+{
+
+    int escolha = 0;
+
     Validar usuario; // puxar o usuário da sessão por aqui
     do
     {
-        usuario = login(); //função de autenticação em autenticacao.c
+        usuario = login(); // função de autenticação em autenticacao.c
     } while (!usuario.status);
 
+    // menu
+
+    while (escolha != 6)
+    {
+
+        printf("\n=================================\n");
+        printf("           MENU PRINCIPAL        \n");
+        printf("=================================\n");
+        printf(" 1 - Cadastrar novo item\n");
+        printf(" 2 - Listar registros\n");
+        printf(" 3 - Pesquisar registro\n");
+        printf(" 4 - Editar registro\n");
+        printf(" 5 - Excluir registro\n");
+        printf(" 6 - Encerrar o programa\n");
+        printf("=================================\n");
+        printf("Escolha uma opcao: ");
+        scanf("%d", &escolha);
+
+        while (getchar() != '\n')
+            ;
+
+        switch (escolha)
+        {
+        case 1:
+            // cadastrar
+            break;
+
+        case 2:
+            // listar
+            break;
+
+        case 3:
+            // pesquisar
+            break;
+
+        case 4:
+            // editar
+            break;
+
+        case 5:
+            // excluir
+            break;
+
+        case 6:
+            printf("Encerrando o programa...\n");
+            break;
+
+        default:
+            printf("Opcao invalida!\n");
+        }
+    }
+
+    return 0;
 }
