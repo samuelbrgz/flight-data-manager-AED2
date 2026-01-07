@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 #include "autenticacao.h"
 #include "logs.h"
 
@@ -13,6 +14,9 @@ int main(void)
     do
     {
         usuario = login(); // função de autenticação em autenticacao.c
+        if(strcmp(usuario.usuario, "usuario_incorreto") == 0){
+            return 0;
+        }
     } while (!usuario.status);
 
     // menu
