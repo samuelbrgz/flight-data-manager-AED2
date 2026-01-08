@@ -46,7 +46,7 @@ int main(void)
         switch (escolha)
         {
         case 1:
-            cadastrarViagem(&lista);
+            cadastrarViagem(&lista, usuario.usuario);
             break;
 
         case 2:

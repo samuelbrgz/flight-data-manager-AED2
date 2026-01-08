@@ -1,6 +1,7 @@
 #ifndef LOGS_H
 #define LOGS_H
 #include <stdbool.h>
+#include "dados.h"
 
 // indica qual tipo de log será printado
 typedef enum {
@@ -18,7 +19,8 @@ typedef struct {
 } LOG_TIPO_AUTENTICACAO;
 
 typedef struct {
-    // struct do item
+    int id;
+    char *motivoDeFalha; // mensagem para identificar o erro durante a ação
     bool status; // indica se o item foi adicionado com, ou sem sucesso
 } LOG_TIPO_ADD_ITEM;
 

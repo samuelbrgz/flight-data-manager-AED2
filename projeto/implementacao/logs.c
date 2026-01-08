@@ -6,7 +6,7 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
     FILE *arquivo = fopen("../dados/logs.csv", "a");
 
     char tempoFormatado[50];
-    char msg[100];
+    char msg[180];
 
     // pega o tempo atual
     time_t now = time(NULL);
@@ -31,6 +31,20 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
             } else {
                 snprintf(msg, sizeof(msg), "Houve uma tentativa de login como \"%s\", porém sem sucesso.\n", usuario);
             };
+            break;
+        case ADD_ITEM:
+            if (dados.info_add.status) {
+                snprintf(msg, sizeof(msg), "O usuário %s cadastrou uma nova viagem com o id %d.\n", usuario, dados.info_add.id);
+            } else {
+                snprintf(
+                    msg, 
+                    sizeof(msg), 
+                    "O usuário %s tentou realizar um cadastro da viagem de id %d, porém sem sucesso. (Motivo: %s)\n", 
+                    usuario, 
+                    dados.info_add.id, 
+                    dados.info_add.motivoDeFalha
+                );
+            }
             break;
         case LIS_ITEM: 
             snprintf(msg, sizeof(msg), "O usuário %s listou todos os itens.\n", usuario);
