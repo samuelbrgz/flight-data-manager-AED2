@@ -1,0 +1,20 @@
+#ifndef DADOS_H
+#define DADOS_H
+
+typedef struct {
+    int id; 
+    char codigo_voo[10];
+    char origem[31];
+    char destino[31];
+} VIAGEM;
+
+typedef struct No {
+    VIAGEM dado;
+    struct No* proximo;
+} No;
+
+void carregarDados(No **inicio);
+void cadastrarViagem(No** inicio);
+int verificarDuplicado(No* inicio, int id_procurado);
+
+#endif

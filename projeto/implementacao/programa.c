@@ -4,10 +4,12 @@
 #include <string.h>
 #include "autenticacao.h"
 #include "logs.h"
+#include "dados.h"
 
 int main(void)
 {
-
+    No *lista = NULL;
+    carregarDados(&lista); // carrega os dados do arquivo base e insere na lista
     int escolha = 0;
 
     Validar usuario; // puxar o usuário da sessão por aqui
@@ -27,7 +29,7 @@ int main(void)
         printf("\n=================================\n");
         printf("           MENU PRINCIPAL        \n");
         printf("=================================\n");
-        printf(" 1 - Cadastrar novo item\n");
+        printf(" 1 - Cadastrar viagem\n");
         printf(" 2 - Listar registros\n");
         printf(" 3 - Pesquisar registro\n");
         printf(" 4 - Editar registro\n");
@@ -35,15 +37,20 @@ int main(void)
         printf(" 6 - Encerrar o programa\n");
         printf("=================================\n");
         printf("Escolha uma opcao: ");
-        scanf("%d", &escolha);
 
-        while (getchar() != '\n')
-            ;
+        if (scanf("%d", &escolha) != 1)
+        {
+            printf("Opcao invalida.\n");
+            while (getchar() != '\n')
+                ; // limpa buffer
+            continue;
+        }
+        getchar();
 
         switch (escolha)
         {
         case 1:
-            // cadastrar
+            cadastrarViagem(&lista);
             break;
 
         case 2:
