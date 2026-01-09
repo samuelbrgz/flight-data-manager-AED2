@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "dados.h"
+#include "logs.h"
 
 No *criarNo(VIAGEM v)
 {
@@ -64,7 +66,7 @@ int verificarDuplicado(No *inicio, int id_procurado)
     return 0;
 }
 
-void cadastrarViagem(No **inicio)
+void cadastrarViagem(No **inicio, char *usuario)
 {
     VIAGEM nova;
 
@@ -87,6 +89,17 @@ void cadastrarViagem(No **inicio)
     {
         printf("\n[AVISO] O ID %d ja esta em uso.\n", nova.id);
         // INSERIR LOG DE ERRO (ID DUPLICADO) AQUI
+        registrarLog(
+            usuario, 
+            ADD_ITEM, 
+            (LOG_DADOS) {
+                .info_add = {
+                    nova.id,
+                    "Id Duplicado",
+                    false
+                }
+            }
+        );
         printf("===================================\n");
         return;
     }
@@ -112,6 +125,17 @@ void cadastrarViagem(No **inicio)
         inserirNoFinal(inicio, nova); // Atualiza a lista na memória principal
 
         printf("\n[SUCESSO] Viagem registrada com sucesso!\n");
+        registrarLog(
+            usuario, 
+            ADD_ITEM, 
+            (LOG_DADOS) {
+                .info_add = {
+                    nova.id,
+                    NULL,
+                    true
+                }
+            }
+        );
         // INSERIR LOG DE SUCESSO AQUI
     }
     else

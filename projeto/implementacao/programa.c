@@ -50,7 +50,7 @@ int main(void)
         switch (escolha)
         {
         case 1:
-            cadastrarViagem(&lista);
+            cadastrarViagem(&lista, usuario.usuario);
             break;
 
         case 2:
@@ -71,6 +71,7 @@ int main(void)
 
         case 6:
             printf("Encerrando o programa...\n");
+            registrarLog(usuario.usuario, ENCERRAR, (LOG_DADOS) {0});
             break;
 
         default:

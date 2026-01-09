@@ -14,7 +14,7 @@ typedef struct No {
 } No;
 
 void carregarDados(No **inicio);
-void cadastrarViagem(No** inicio);
+void cadastrarViagem(No** inicio, char *usuario);
 int verificarDuplicado(No* inicio, int id_procurado);
 
 #endif
