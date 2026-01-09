@@ -67,6 +67,7 @@ int main(void)
 
         case 6:
             printf("Encerrando o programa...\n");
+            registrarLog(usuario.usuario, ENCERRAR, (LOG_DADOS) {0});
             break;
 
         default:
