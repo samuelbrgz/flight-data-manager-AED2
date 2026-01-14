@@ -58,7 +58,7 @@ int main(void)
             break;
 
         case 3:
-            // pesquisar
+            pesquisaritem(lista, usuario.usuario);
             break;
 
         case 4:
