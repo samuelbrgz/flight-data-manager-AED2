@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <windows.h>
 #include "dados.h"
 #include "logs.h"
-//oieeeeeeeeeee
+
 No *criarNo(VIAGEM v)
 {
     No *novo = (No *)malloc(sizeof(No));
@@ -143,4 +144,16 @@ void cadastrarViagem(No **inicio, char *usuario)
         printf("\n[ERRO] Nao foi possivel acessar a base de dados.\n");
     }
     printf("===================================\n");
+}
+
+
+void listaritem(No *inicio, char *usuario){
+    No *atual = inicio;
+    int posicao = 0;
+    while(atual != NULL){
+        printf("%d. |%d|  Origem: %s | Destino: %s | Codigo: %s\n",posicao, atual->dado.id,atual->dado.origem,atual->dado.destino,atual->dado.codigo_voo);
+        atual=atual->proximo;
+        posicao++;
+    }
+    Sleep(3000);
 }

@@ -54,7 +54,7 @@ int main(void)
             break;
 
         case 2:
-            // listar
+            listaritem(lista, usuario.usuario);
             break;
 
         case 3:
