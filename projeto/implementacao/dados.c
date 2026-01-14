@@ -155,13 +155,16 @@ void listaritem(No *inicio, char *usuario){
         atual=atual->proximo;
         posicao++;
     }
+    if(posicao==0){
+        printf("\n===Sem registros na lista===\n");
+    }
     Sleep(5000);
 }
 
 No* pesquisaritem(No *inicio, char *usuario){
     No *atual = inicio;
     char pesquisar[10];
-    printf("===== Pesquisar Viagem =====\nCódigo do voo:");
+    printf("\n===== Pesquisar Viagem =====\nCódigo do voo:");
     fgets(pesquisar, sizeof(pesquisar), stdin);
     pesquisar[strcspn(pesquisar, "\n")] = '\0';
 
@@ -169,11 +172,11 @@ No* pesquisaritem(No *inicio, char *usuario){
         atual=atual->proximo;
         }
     if(atual != NULL ){
-        printf("===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n", atual->dado.id,atual->dado.origem,atual->dado.destino,atual->dado.codigo_voo);
+        printf("\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n", atual->dado.id,atual->dado.origem,atual->dado.destino,atual->dado.codigo_voo);
         Sleep(5000);
         return atual;
     }
-    printf("===Voo não encontrado===\n");
+    printf("\n===Voo não encontrado===\n");
     Sleep(5000);
     
 }
