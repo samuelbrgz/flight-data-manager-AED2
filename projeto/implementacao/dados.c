@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "dados.h"
 #include "logs.h"
-
+//oieeeeeeeeeee
 No *criarNo(VIAGEM v)
 {
     No *novo = (No *)malloc(sizeof(No));
