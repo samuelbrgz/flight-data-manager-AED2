@@ -29,7 +29,7 @@ typedef struct {
 // } LOG_TIPO_LIS_ITEM;
 
 typedef struct {
-    int id;
+    char codigo[10];
     bool status; // caso o item pesquisado seja encontrado
 } LOG_TIPO_PESQ_ITEM;
 
@@ -54,6 +54,26 @@ typedef union {
     LOG_TIPO_EXC_ITEM info_exc;
 } LOG_DADOS;
 
+typedef enum {
+    SAIDA_LIS_ITEM,
+    SAIDA_PESQ_ITEM
+} SAIDA_TIPOS;
+
+typedef struct {
+    No *inicio;
+} SAIDA_TIPO_LIS_ITEM;
+
+typedef struct {
+    VIAGEM viagem;
+    bool status;
+} SAIDA_TIPO_PESQ_ITEM;
+
+typedef union {
+    SAIDA_TIPO_LIS_ITEM info_lis;
+    SAIDA_TIPO_PESQ_ITEM info_pesq;
+} SAIDA_DADOS;
+
 void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados);
+void registrarSaida(SAIDA_TIPOS tipo, SAIDA_DADOS dados);
 
 #endif

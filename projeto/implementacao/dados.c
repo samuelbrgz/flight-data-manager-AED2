@@ -16,7 +16,7 @@ void esperar(int ms) {
     #ifdef _WIN64
         Sleep(ms);
     #elif __linux__
-        sleep(ms / 1000);
+        sleep((float) (ms / 1000));
     #endif
 }
 
@@ -164,33 +164,75 @@ void cadastrarViagem(No **inicio, char *usuario)
 void listarItem(No *inicio, char *usuario){
     No *atual = inicio;
     int posicao = 0;
+
     while(atual != NULL){
-        printf("%d. |%d|  Origem: %s | Destino: %s | Codigo: %s\n",posicao, atual->dado.id,atual->dado.origem,atual->dado.destino,atual->dado.codigo_voo);
+        printf(
+            "%d. Id: %d |  Origem: %s | Destino: %s | Codigo: %s\n",
+            posicao, 
+            atual->dado.id,
+            atual->dado.origem,
+            atual->dado.destino,
+            atual->dado.codigo_voo
+        );
+
         atual=atual->proximo;
         posicao++;
     }
+
     if(posicao==0){
         printf("\n===Sem registros na lista===\n");
     }
+
+    registrarLog(usuario, LIS_ITEM, (LOG_DADOS) {0});
+    registrarSaida(SAIDA_LIS_ITEM, (SAIDA_DADOS) {.info_lis = inicio});
     esperar(5000);
 }
 
 No* pesquisarItem(No *inicio, char *usuario){
     No *atual = inicio;
     char pesquisar[10];
+
+    VIAGEM viagem;
+    bool viagemEncontrada = false;
+    
+    // Necessário para printar o código no log
+    LOG_DADOS pesquisa;
+    pesquisa.info_pesq.status = false;
+    
     printf("\n===== Pesquisar Viagem =====\nCódigo do voo: ");
     fgets(pesquisar, sizeof(pesquisar), stdin);
     pesquisar[strcspn(pesquisar, "\n")] = '\0';
+    strcpy(pesquisa.info_pesq.codigo, pesquisar);
 
     while(atual != NULL && strcmp(pesquisar,atual->dado.codigo_voo) != 0){
         atual=atual->proximo;
-        }
+    }
+
     if(atual != NULL ){
-        printf("\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n", atual->dado.id,atual->dado.origem,atual->dado.destino,atual->dado.codigo_voo);
+        printf(
+            "\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n", 
+            atual->dado.id,
+            atual->dado.origem,
+            atual->dado.destino,
+            atual->dado.codigo_voo
+        );
+
+        viagem = atual->dado;
+        viagemEncontrada = true;
+
+        pesquisa.info_pesq.status = viagemEncontrada;
+
+        registrarLog(usuario, PESQ_ITEM, pesquisa);
+        registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS) {.info_pesq = {viagem, viagemEncontrada}});
         esperar(5000);
+
         return atual;
     }
+
     printf("\n===Voo não encontrado===\n");
+    registrarLog(usuario, PESQ_ITEM, pesquisa);
+    registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS) {.info_pesq = {viagem, viagemEncontrada}});
+
     esperar(5000);
-    
+    return NULL;
 }

@@ -14,8 +14,8 @@ typedef struct No {
 } No;
 
 
-void listaritem(No *inicio, char *usuario);
-No* pesquisaritem(No *inicio, char *usuario);
+void listarItem(No *inicio, char *usuario);
+No* pesquisarItem(No *inicio, char *usuario);
 void carregarDados(No **inicio);
 void cadastrarViagem(No** inicio, char *usuario);
 int verificarDuplicado(No* inicio, int id_procurado);

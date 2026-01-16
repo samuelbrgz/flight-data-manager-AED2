@@ -5,6 +5,11 @@
 void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
     FILE *arquivo = fopen("../dados/logs.csv", "a");
 
+    if (!arquivo) {
+        printf("Erro ao abrir arquivo de logs.\n");
+        return;
+    }
+
     char tempoFormatado[50];
     char msg[180];
 
@@ -47,7 +52,26 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
             }
             break;
         case LIS_ITEM: 
-            snprintf(msg, sizeof(msg), "O usuário %s listou todos os itens.\n", usuario);
+            snprintf(msg, sizeof(msg), "O usuário %s listou todas as viagens.\n", usuario);
+            break;
+        case PESQ_ITEM:
+            if (dados.info_pesq.status) {
+                snprintf(
+                    msg, 
+                    sizeof(msg), 
+                    "O usuário %s procurou pela viagem de código \"%s\". A viagem foi encontrada com sucesso!\n", 
+                    usuario, 
+                    dados.info_pesq.codigo
+                );
+            } else {
+                snprintf(
+                    msg, 
+                    sizeof(msg), 
+                    "O usuário %s procurou pela viagem de código \"%s\". Nenhum resultado encontrado.\n", 
+                    usuario, 
+                    dados.info_pesq.codigo
+                );
+            }
             break;
         case ENCERRAR:
             snprintf(msg, sizeof(msg), "O usuário %s encerrou o programa.\n", usuario);
@@ -60,5 +84,59 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
     // o log será armazenado no seguinte formato .csv
     // [data],[mensagem do log]
     fprintf(arquivo, "%s,%s", tempoFormatado, msg);
+    fclose(arquivo);
+};
+
+void registrarSaida(SAIDA_TIPOS tipo, SAIDA_DADOS dados) {
+    FILE *arquivo = fopen("../saida/saida.csv", "w");
+
+    if (!arquivo) {
+        printf("Erro ao abrir arquivo de saída.\n");
+        return;
+    }
+
+    switch (tipo) {
+        case SAIDA_LIS_ITEM:
+            No *atual = dados.info_lis.inicio;
+            int posicao = 0;
+            
+            while(atual != NULL){
+                fprintf(
+                    arquivo, 
+                    "%d. Id: %d |  Origem: %s | Destino: %s | Codigo: %s\n",
+                    posicao, 
+                    atual->dado.id,
+                    atual->dado.origem,
+                    atual->dado.destino,
+                    atual->dado.codigo_voo
+                );
+
+                atual=atual->proximo;
+                posicao++;
+            }
+
+            if(posicao == 0){
+                fprintf(arquivo, "\n===Sem registros na lista===\n");
+            }
+
+            break;
+        case SAIDA_PESQ_ITEM:
+            if (!dados.info_pesq.status) {
+                fprintf(arquivo, "===Voo não encontrado===\n");
+                break;
+            }
+
+            fprintf(
+                arquivo,
+                "ID: %d\nOrigem: %s\nDestino: %s \nCodigo: %s\n", 
+                dados.info_pesq.viagem.id,
+                dados.info_pesq.viagem.origem,
+                dados.info_pesq.viagem.destino,
+                dados.info_pesq.viagem.codigo_voo
+            );
+
+            break;
+    }
+
     fclose(arquivo);
 };
