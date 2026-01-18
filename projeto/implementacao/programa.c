@@ -54,11 +54,11 @@ int main(void)
             break;
 
         case 2:
-            listaritem(lista, usuario.usuario);
+            listarItem(lista, usuario.usuario);
             break;
 
         case 3:
-            pesquisaritem(lista, usuario.usuario);
+            pesquisarItem(lista, usuario.usuario);
             break;
 
         case 4:
