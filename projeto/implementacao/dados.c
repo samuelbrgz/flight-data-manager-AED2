@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <windows.h>
 #include "dados.h"
 #include "logs.h"
 
@@ -143,4 +144,39 @@ void cadastrarViagem(No **inicio, char *usuario)
         printf("\n[ERRO] Nao foi possivel acessar a base de dados.\n");
     }
     printf("===================================\n");
+}
+
+
+void listaritem(No *inicio, char *usuario){
+    No *atual = inicio;
+    int posicao = 0;
+    while(atual != NULL){
+        printf("%d. |%d|  Origem: %s | Destino: %s | Codigo: %s\n",posicao, atual->dado.id,atual->dado.origem,atual->dado.destino,atual->dado.codigo_voo);
+        atual=atual->proximo;
+        posicao++;
+    }
+    if(posicao==0){
+        printf("\n===Sem registros na lista===\n");
+    }
+    Sleep(5000);
+}
+
+No* pesquisaritem(No *inicio, char *usuario){
+    No *atual = inicio;
+    char pesquisar[10];
+    printf("\n===== Pesquisar Viagem =====\nCódigo do voo:");
+    fgets(pesquisar, sizeof(pesquisar), stdin);
+    pesquisar[strcspn(pesquisar, "\n")] = '\0';
+
+    while(atual != NULL && strcmp(pesquisar,atual->dado.codigo_voo) != 0){
+        atual=atual->proximo;
+        }
+    if(atual != NULL ){
+        printf("\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n", atual->dado.id,atual->dado.origem,atual->dado.destino,atual->dado.codigo_voo);
+        Sleep(5000);
+        return atual;
+    }
+    printf("\n===Voo não encontrado===\n");
+    Sleep(5000);
+    
 }
