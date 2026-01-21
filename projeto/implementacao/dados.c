@@ -252,12 +252,14 @@ bool editarItem(No *inicio, char *usuario){
     scanf("%d", &viagemEditada.id);
     getchar();
 
-    if (verificarDuplicado(inicio, viagemEditada.id))
-    {
-        printf("\n[AVISO] O ID %d ja esta em uso.\n", viagemEditada.id);
-        // INSERIR LOG DE ERRO (ID DUPLICADO) PARA EDIÇÃO DE ITEM
-        
-        return false;
+    if(atual->dado.id != viagemEditada.id){ //Verificar se o id não está repetido em outro vôo, mas não impedindo de colocar o mesmo id do vôo atual a ser editado
+        if (verificarDuplicado(inicio, viagemEditada.id))
+        {
+            printf("\n[AVISO] O ID %d ja esta em uso.\n", viagemEditada.id);
+            // INSERIR LOG DE ERRO (ID DUPLICADO) PARA EDIÇÃO DE ITEM
+            
+            return false;
+        }
     }
 
     printf("\nCódigo de Vôo: ");
@@ -284,17 +286,19 @@ bool editarItem(No *inicio, char *usuario){
         while (fgets(linha, sizeof(linha), arquivo)) { // laço de repetição que escaneia linha a linha do .csv e compara com o id e codigo de voo
             sscanf(linha, "%d;%49[^;];%49[^;];%49[^\n]", &scan.id, scan.codigo_voo, scan.origem, scan.destino);
 
-            if (scan.id == atual->dado.id && strcmp(scan.codigo_voo, atual->dado.codigo_voo) == 0) {
+            if (scan.id == atual->dado.id && strcmp(scan.codigo_voo, atual->dado.codigo_voo) == 0) { //substituindo os dados pelos novos editados
                 fprintf(temp, "%d;%s;%s;%s\n", viagemEditada.id, viagemEditada.codigo_voo, viagemEditada.origem, viagemEditada.destino);
             }
             else{
-                fprintf(temp, "%d;%s;%s;%s\n", scan.id, scan.codigo_voo, scan.origem, scan.destino);
+                fprintf(temp, "%d;%s;%s;%s\n", scan.id, scan.codigo_voo, scan.origem, scan.destino); //apenas copia os dados não editados
             }
         }
         fclose(temp);
         fclose(arquivo);
-        remove("../dados/base.csv");
-        rename("../dados/temp.csv", "../dados/base.csv");
+        remove("../dados/base.csv"); //remove a base de dados antiga
+        rename("../dados/temp.csv", "../dados/base.csv"); //renomeia o arquivo temporário e transforma na base de dados atual
+
+        //COLOCAR REGISTRO DE LOG DE SUCESSO DE EDIÇÃO DE ITEM
     }
     else
     {
@@ -306,7 +310,7 @@ bool editarItem(No *inicio, char *usuario){
     return true;
 }
 
-void liberarLista(No **inicio) {
+void liberarLista(No **inicio) { //função para limpar a lista na memória do programa em funcionamento
     No *atual = *inicio;
     No *aux;
 
