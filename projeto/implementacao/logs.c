@@ -73,6 +73,26 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
                 );
             }
             break;
+        case EDIT_ITEM:
+            if (dados.info_edit.status) {
+                snprintf(
+                    msg, 
+                    sizeof(msg),
+                    "O usuário %s editou a viagem de código \"%s\".\n",
+                    usuario,
+                    dados.info_edit.codigo_voo
+                );
+            } else {
+                snprintf(
+                    msg, 
+                    sizeof(msg),
+                    "O usuário %s tentou editar uma viagem, no entanto inseriu o id \"%d\". (%s).\n",
+                    usuario,
+                    dados.info_edit.id,
+                    dados.info_edit.motivoDeFalha
+                ); 
+            }
+            break;
         case ENCERRAR:
             snprintf(msg, sizeof(msg), "O usuário %s encerrou o programa.\n", usuario);
             break;
