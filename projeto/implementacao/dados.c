@@ -224,7 +224,7 @@ No* pesquisarItem(No *inicio, char *usuario){
 
         registrarLog(usuario, PESQ_ITEM, pesquisa);
         registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS) {.info_pesq = {viagem, viagemEncontrada}});
-        esperar(5000);
+        esperar(3000);
 
         return atual;
     }
@@ -233,7 +233,7 @@ No* pesquisarItem(No *inicio, char *usuario){
     registrarLog(usuario, PESQ_ITEM, pesquisa);
     registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS) {.info_pesq = {viagem, viagemEncontrada}});
 
-    esperar(5000);
+    esperar(3000);
     return NULL;
 }
 
@@ -247,6 +247,10 @@ bool editarItem(No *inicio, char *usuario){
     VIAGEM viagemEditada, scan;
     char buffer[50]; //buffer temporário para armazenar dentro das structs os dados
 
+    // Necessário para printar o log
+    LOG_DADOS info;
+    info.info_edit.status = false;
+
     printf("\nDigite os novos valores:\n");
     printf("ID: ");
     scanf("%d", &viagemEditada.id);
@@ -256,8 +260,11 @@ bool editarItem(No *inicio, char *usuario){
         if (verificarDuplicado(inicio, viagemEditada.id))
         {
             printf("\n[AVISO] O ID %d ja esta em uso.\n", viagemEditada.id);
-            // INSERIR LOG DE ERRO (ID DUPLICADO) PARA EDIÇÃO DE ITEM
             
+            info.info_edit.id = viagemEditada.id;
+            info.info_edit.motivoDeFalha = "Id Duplicado";
+
+            registrarLog(usuario, EDIT_ITEM, info);
             return false;
         }
     }
@@ -298,7 +305,10 @@ bool editarItem(No *inicio, char *usuario){
         remove("../dados/base.csv"); //remove a base de dados antiga
         rename("../dados/temp.csv", "../dados/base.csv"); //renomeia o arquivo temporário e transforma na base de dados atual
 
-        //COLOCAR REGISTRO DE LOG DE SUCESSO DE EDIÇÃO DE ITEM
+        info.info_edit.status = true;
+        strcpy(info.info_edit.codigo_voo, viagemEditada.codigo_voo);
+        
+        registrarLog(usuario, EDIT_ITEM, info);
     }
     else
     {

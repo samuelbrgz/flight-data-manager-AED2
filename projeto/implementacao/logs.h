@@ -30,11 +30,14 @@ typedef struct {
 
 typedef struct {
     char codigo[10];
-    bool status; // caso o item pesquisado seja encontrado
+    bool status;
 } LOG_TIPO_PESQ_ITEM;
 
 typedef struct {
     int id; // id do item a ser modificado
+    bool status;
+    char codigo_voo[10];
+    char *motivoDeFalha;
 } LOG_TIPO_EDIT_ITEM;
 
 typedef struct {
