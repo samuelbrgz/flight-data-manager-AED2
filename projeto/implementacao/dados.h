@@ -19,5 +19,7 @@ No* pesquisarItem(No *inicio, char *usuario);
 void carregarDados(No **inicio);
 void cadastrarViagem(No** inicio, char *usuario);
 int verificarDuplicado(No* inicio, int id_procurado);
+bool editarItem(No *inicio, char *usuario);
+void liberarLista(No **inicio);
 
 #endif

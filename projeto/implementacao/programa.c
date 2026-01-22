@@ -62,7 +62,9 @@ int main(void)
             break;
 
         case 4:
-            // editar
+            editarItem(lista, usuario.usuario);
+            liberarLista(&lista);
+            carregarDados(&lista);
             break;
 
         case 5:
