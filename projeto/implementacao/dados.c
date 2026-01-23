@@ -320,11 +320,57 @@ bool editarItem(No *inicio, char *usuario){
     return true;
 }
 
+void excluirViagem(No **inicio){
+    if(!*inicio){
+        printf("\n=== Sem registros para excluir ===\n");
+        return;
+    }
+
+    printf("\n===================================\n");
+    printf("       EXCLUSAO DE VIAGEM          \n");
+    printf("===================================\n");
+
+    printf("Digite o ID da viagem que deseja remover: ");
+
+    char buffer[32];
+    int idAlvo;
+    fgets(buffer, sizeof(buffer), stdin);
+    if (sscanf(buffer, "%d", &idAlvo) != 1){
+        printf("\n[ERRO] Entrada invalida.\n");
+        return;
+    }
+
+    No *atual = *inicio;
+    No *anterior = NULL;
+
+    // Busca na lista
+    while (atual && atual->dado.id != idAlvo){
+        anterior = atual;
+        atual = atual->proximo;
+    }
+
+    // ID nao encontrado
+    if (!atual) {
+        printf("\n=== Voo nao encontrado ===\n");
+        esperar(3000);
+        return;
+    }
+
+    // remoçao na lista
+    if (!anterior){
+        *inicio = atual->proximo;
+    } else {
+        anterior->proximo = atual ->proximo;
+    }
+
+    free(atual);
+}
+
 void liberarLista(No **inicio) { //função para limpar a lista na memória do programa em funcionamento
     No *atual = *inicio;
     No *aux;
 
-    while (atual != NULL) {
+    while (atual) {
         aux = atual;
         atual = atual->proximo;
         free(aux);
