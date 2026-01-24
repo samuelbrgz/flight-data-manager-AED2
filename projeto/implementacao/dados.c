@@ -158,9 +158,7 @@ void listarItem(No *inicio, char *usuario)
 {
     No *atual = inicio;
     int posicao = 0;
-    printf("\n===================================\n");
-    printf("          LISTA DE VIAGENS          \n");
-    printf("===================================\n");
+
     while (atual != NULL)
     {
         printf(
