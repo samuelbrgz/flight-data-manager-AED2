@@ -7,17 +7,18 @@
 
 // include para poder criar uma funçao sleep q funcione tanto em windows, quanto em linux
 #ifdef _WIN64
-    #include <windows.h>
+#include <windows.h>
 #elif __linux__
-    #include <unistd.h>
+#include <unistd.h>
 #endif
 
-void esperar(int ms) {
-    #ifdef _WIN64
-        Sleep(ms);
-    #elif __linux__
-        sleep((float) (ms / 1000));
-    #endif
+void esperar(int ms)
+{
+#ifdef _WIN64
+    Sleep(ms);
+#elif __linux__
+    sleep((float)(ms / 1000));
+#endif
 }
 
 No *criarNo(VIAGEM v)
@@ -90,7 +91,7 @@ void cadastrarViagem(No **inicio, char *usuario)
     printf("===================================\n");
 
     printf("ID da Viagem: ");
-    
+
     char buffer[32];
     fgets(buffer, sizeof(buffer), stdin);
     if (sscanf(buffer, "%d", &nova.id) != 1)
@@ -98,23 +99,19 @@ void cadastrarViagem(No **inicio, char *usuario)
         printf("\n[ERRO] Entrada invalida.\n");
         return;
     }
-    
 
     if (verificarDuplicado(*inicio, nova.id))
     {
         printf("\n[AVISO] O ID %d ja esta em uso.\n", nova.id);
         // INSERIR LOG DE ERRO (ID DUPLICADO) AQUI
         registrarLog(
-            usuario, 
-            ADD_ITEM, 
-            (LOG_DADOS) {
+            usuario,
+            ADD_ITEM,
+            (LOG_DADOS){
                 .info_add = {
                     nova.id,
                     "Id Duplicado",
-                    false
-                }
-            }
-        );
+                    false}});
         printf("===================================\n");
         return;
     }
@@ -141,16 +138,13 @@ void cadastrarViagem(No **inicio, char *usuario)
 
         printf("\n[SUCESSO] Viagem registrada com sucesso!\n");
         registrarLog(
-            usuario, 
-            ADD_ITEM, 
-            (LOG_DADOS) {
+            usuario,
+            ADD_ITEM,
+            (LOG_DADOS){
                 .info_add = {
                     nova.id,
                     NULL,
-                    true
-                }
-            }
-        );
+                    true}});
         // INSERIR LOG DE SUCESSO AQUI
     }
     else
@@ -160,62 +154,67 @@ void cadastrarViagem(No **inicio, char *usuario)
     printf("===================================\n");
 }
 
-
-void listarItem(No *inicio, char *usuario){
+void listarItem(No *inicio, char *usuario)
+{
     No *atual = inicio;
     int posicao = 0;
-
-    while(atual != NULL){
+    printf("\n===================================\n");
+    printf("          LISTA DE VIAGENS          \n");
+    printf("===================================\n");
+    while (atual != NULL)
+    {
         printf(
             "%d. Id: %d |  Origem: %s | Destino: %s | Codigo: %s\n",
-            posicao, 
+            posicao,
             atual->dado.id,
             atual->dado.origem,
             atual->dado.destino,
-            atual->dado.codigo_voo
-        );
+            atual->dado.codigo_voo);
 
-        atual=atual->proximo;
+        atual = atual->proximo;
         posicao++;
     }
 
-    if(posicao==0){
+    if (posicao == 0)
+    {
         printf("\n===Sem registros na lista===\n");
     }
 
-    registrarLog(usuario, LIS_ITEM, (LOG_DADOS) {0});
-    registrarSaida(SAIDA_LIS_ITEM, (SAIDA_DADOS) {.info_lis = inicio});
+    registrarLog(usuario, LIS_ITEM, (LOG_DADOS){0});
+    registrarSaida(SAIDA_LIS_ITEM, (SAIDA_DADOS){.info_lis = inicio});
     esperar(5000);
 }
 
-No* pesquisarItem(No *inicio, char *usuario){
+No *pesquisarItem(No *inicio, char *usuario)
+{
     No *atual = inicio;
     char pesquisar[10];
 
     VIAGEM viagem;
     bool viagemEncontrada = false;
-    
+
     // Necessário para printar o código no log
     LOG_DADOS pesquisa;
     pesquisa.info_pesq.status = false;
-    
+
     printf("\n===== Pesquisar Viagem =====\nCódigo do voo: ");
     fgets(pesquisar, sizeof(pesquisar), stdin);
     pesquisar[strcspn(pesquisar, "\n")] = '\0';
     strcpy(pesquisa.info_pesq.codigo, pesquisar);
 
-    while(atual != NULL && strcmp(pesquisar,atual->dado.codigo_voo) != 0){
-        atual=atual->proximo;
+    while (atual != NULL && strcmp(pesquisar, atual->dado.codigo_voo) != 0)
+    {
+        atual = atual->proximo;
     }
 
-    if(atual != NULL ){
+    if (atual != NULL)
+    {
         printf(
-            "\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n", 
+            "\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n",
             atual->dado.id,
             atual->dado.origem,
             atual->dado.destino,
-            atual->dado.codigo_voo
-        );
+            atual->dado.codigo_voo);
 
         viagem = atual->dado;
         viagemEncontrada = true;
@@ -223,7 +222,7 @@ No* pesquisarItem(No *inicio, char *usuario){
         pesquisa.info_pesq.status = viagemEncontrada;
 
         registrarLog(usuario, PESQ_ITEM, pesquisa);
-        registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS) {.info_pesq = {viagem, viagemEncontrada}});
+        registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
         esperar(3000);
 
         return atual;
@@ -231,21 +230,23 @@ No* pesquisarItem(No *inicio, char *usuario){
 
     printf("\n===Voo não encontrado===\n");
     registrarLog(usuario, PESQ_ITEM, pesquisa);
-    registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS) {.info_pesq = {viagem, viagemEncontrada}});
+    registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
 
     esperar(3000);
     return NULL;
 }
 
-bool editarItem(No *inicio, char *usuario){
+bool editarItem(No *inicio, char *usuario)
+{
 
     No *atual = pesquisarItem(inicio, usuario);
-    if (atual == NULL) {
-        return false; //para caso a função pesquisar item não ache o item
+    if (atual == NULL)
+    {
+        return false; // para caso a função pesquisar item não ache o item
     }
 
     VIAGEM viagemEditada, scan;
-    char buffer[50]; //buffer temporário para armazenar dentro das structs os dados
+    char buffer[50]; // buffer temporário para armazenar dentro das structs os dados
 
     // Necessário para printar o log
     LOG_DADOS info;
@@ -256,11 +257,12 @@ bool editarItem(No *inicio, char *usuario){
     scanf("%d", &viagemEditada.id);
     getchar();
 
-    if(atual->dado.id != viagemEditada.id){ //Verificar se o id não está repetido em outro vôo, mas não impedindo de colocar o mesmo id do vôo atual a ser editado
+    if (atual->dado.id != viagemEditada.id)
+    { // Verificar se o id não está repetido em outro vôo, mas não impedindo de colocar o mesmo id do vôo atual a ser editado
         if (verificarDuplicado(inicio, viagemEditada.id))
         {
             printf("\n[AVISO] O ID %d ja esta em uso.\n", viagemEditada.id);
-            
+
             info.info_edit.id = viagemEditada.id;
             info.info_edit.motivoDeFalha = "Id Duplicado";
 
@@ -284,30 +286,33 @@ bool editarItem(No *inicio, char *usuario){
     buffer[strcspn(buffer, "\r\n")] = '\0';
     strcpy(viagemEditada.destino, buffer);
 
-    FILE *arquivo = fopen("../dados/base.csv", "r"); //arquivo original aberto para leitura
-    FILE *temp = fopen("../dados/temp.csv", "w"); //criação de arquivo temporário para armazenar a edição e depois substitui-la
+    FILE *arquivo = fopen("../dados/base.csv", "r"); // arquivo original aberto para leitura
+    FILE *temp = fopen("../dados/temp.csv", "w");    // criação de arquivo temporário para armazenar a edição e depois substitui-la
     if (arquivo != NULL && temp != NULL)
     {
         char linha[120];
 
-        while (fgets(linha, sizeof(linha), arquivo)) { // laço de repetição que escaneia linha a linha do .csv e compara com o id e codigo de voo
+        while (fgets(linha, sizeof(linha), arquivo))
+        { // laço de repetição que escaneia linha a linha do .csv e compara com o id e codigo de voo
             sscanf(linha, "%d;%49[^;];%49[^;];%49[^\n]", &scan.id, scan.codigo_voo, scan.origem, scan.destino);
 
-            if (scan.id == atual->dado.id && strcmp(scan.codigo_voo, atual->dado.codigo_voo) == 0) { //substituindo os dados pelos novos editados
+            if (scan.id == atual->dado.id && strcmp(scan.codigo_voo, atual->dado.codigo_voo) == 0)
+            { // substituindo os dados pelos novos editados
                 fprintf(temp, "%d;%s;%s;%s\n", viagemEditada.id, viagemEditada.codigo_voo, viagemEditada.origem, viagemEditada.destino);
             }
-            else{
-                fprintf(temp, "%d;%s;%s;%s\n", scan.id, scan.codigo_voo, scan.origem, scan.destino); //apenas copia os dados não editados
+            else
+            {
+                fprintf(temp, "%d;%s;%s;%s\n", scan.id, scan.codigo_voo, scan.origem, scan.destino); // apenas copia os dados não editados
             }
         }
         fclose(temp);
         fclose(arquivo);
-        remove("../dados/base.csv"); //remove a base de dados antiga
-        rename("../dados/temp.csv", "../dados/base.csv"); //renomeia o arquivo temporário e transforma na base de dados atual
+        remove("../dados/base.csv");                      // remove a base de dados antiga
+        rename("../dados/temp.csv", "../dados/base.csv"); // renomeia o arquivo temporário e transforma na base de dados atual
 
         info.info_edit.status = true;
         strcpy(info.info_edit.codigo_voo, viagemEditada.codigo_voo);
-        
+
         registrarLog(usuario, EDIT_ITEM, info);
     }
     else
@@ -320,8 +325,10 @@ bool editarItem(No *inicio, char *usuario){
     return true;
 }
 
-void excluirViagem(No **inicio){
-    if(!*inicio){
+void excluirViagem(No **inicio)
+{
+    if (!*inicio)
+    {
         printf("\n=== Sem registros para excluir ===\n");
         return;
     }
@@ -335,7 +342,8 @@ void excluirViagem(No **inicio){
     char buffer[32];
     int idAlvo;
     fgets(buffer, sizeof(buffer), stdin);
-    if (sscanf(buffer, "%d", &idAlvo) != 1){
+    if (sscanf(buffer, "%d", &idAlvo) != 1)
+    {
         printf("\n[ERRO] Entrada invalida.\n");
         return;
     }
@@ -344,33 +352,65 @@ void excluirViagem(No **inicio){
     No *anterior = NULL;
 
     // Busca na lista
-    while (atual && atual->dado.id != idAlvo){
+    while (atual && atual->dado.id != idAlvo)
+    {
         anterior = atual;
         atual = atual->proximo;
     }
 
     // ID nao encontrado
-    if (!atual) {
+    if (!atual)
+    {
         printf("\n=== Voo nao encontrado ===\n");
         esperar(3000);
         return;
     }
 
     // remoçao na lista
-    if (!anterior){
+    if (!anterior)
+    {
         *inicio = atual->proximo;
-    } else {
-        anterior->proximo = atual ->proximo;
+    }
+    else
+    {
+        anterior->proximo = atual->proximo;
     }
 
     free(atual);
+
+    FILE *arquivo = fopen("../dados/base.csv", "w");
+
+    if (arquivo)
+    {
+        No *temp = *inicio;
+
+        while (temp)
+        {
+            fprintf(arquivo, "%d;%s;%s;%s\n",
+                    temp->dado.id,
+                    temp->dado.codigo_voo,
+                    temp->dado.origem,
+                    temp->dado.destino);
+            temp = temp->proximo;
+        }
+        fclose(arquivo);
+        printf("\n[SUCESSO] Registro removido e base atualizada!\n");
+        // inserir log aqui
+    }
+    else
+    {
+        printf("\n[ERRO] Nao foi possivel acessar a base de dados para sobrescrita.\n");
+    }
+    printf("===================================\n");
 }
 
-void liberarLista(No **inicio) { //função para limpar a lista na memória do programa em funcionamento
+void liberarLista(No **inicio)
+{ // função para limpar a lista na memória do programa em funcionamento
     No *atual = *inicio;
     No *aux;
 
-    while (atual) {
+    while (atual)
+    {
         aux = atual;
         atual = atual->proximo;
         free(aux);

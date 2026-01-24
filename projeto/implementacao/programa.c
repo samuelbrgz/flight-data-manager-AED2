@@ -68,7 +68,7 @@ int main(void)
             break;
 
         case 5:
-            // excluir
+            excluirViagem(&lista);
             break;
 
         case 6:
