@@ -109,3 +109,11 @@
 2026/01/24 - 22:24:13,O usuário matheus tentou excluir a viagem de id 99999, porém não foram encontradas viagens com este id.
 2026/01/24 - 22:24:33,O usuário logou-se como "matheus" com sucesso!
 2026/01/24 - 22:24:33,O usuário matheus excluiu a viagem de id 1234.
+2026/01/25 - 10:20:25,O usuário logou-se como "Luciano_Tadeu" com sucesso!
+2026/01/25 - 10:20:25,O usuário Luciano_Tadeu cadastrou uma nova viagem com o id 3000.
+2026/01/25 - 10:21:36,O usuário logou-se como "Luciano_Tadeu" com sucesso!
+2026/01/25 - 10:21:36,O usuário Luciano_Tadeu tentou realizar um cadastro da viagem de id 3000, porém sem sucesso. (Motivo: Id Duplicado)
+2026/01/25 - 10:23:01,O usuário logou-se como "matheus" com sucesso!
+2026/01/25 - 10:23:01,O usuário matheus tentou excluir a viagem de id 99999, porém não foram encontradas viagens com este id.
+2026/01/25 - 10:24:46,O usuário logou-se como "matheus" com sucesso!
+2026/01/25 - 10:24:46,O usuário matheus excluiu a viagem de id 1234.
