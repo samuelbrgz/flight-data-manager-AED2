@@ -92,3 +92,20 @@
 2026/01/21 - 11:30:37,O usuário matheus tentou editar uma viagem, no entanto inseriu o id "2". (Id Duplicado).
 2026/01/21 - 11:30:54,O usuário matheus procurou pela viagem de código "0". A viagem foi encontrada com sucesso!
 2026/01/21 - 11:31:00,O usuário matheus editou a viagem de código "0".
+2026/01/24 - 21:33:30,O usuário logou-se como "matheus" com sucesso!
+2026/01/24 - 21:33:36,O usuário matheus listou todas as viagens.
+2026/01/24 - 21:34:00,O usuário matheus procurou pela viagem de código "0". A viagem foi encontrada com sucesso!
+2026/01/24 - 21:34:19,O usuário matheus editou a viagem de código "a".
+2026/01/24 - 21:34:34,O usuário matheus excluiu a viagem de id 37.
+2026/01/24 - 21:34:36,O usuário matheus listou todas as viagens.
+2026/01/24 - 21:34:59,O usuário matheus procurou pela viagem de código "0". Nenhum resultado encontrado.
+2026/01/24 - 21:35:22,O usuário matheus tentou excluir a viagem de id 37, porém não foram encontradas viagens com este id.
+2026/01/24 - 21:35:33,O usuário matheus encerrou o programa.
+2026/01/24 - 22:22:47,O usuário logou-se como "matheus" com sucesso!
+2026/01/24 - 22:23:00,O usuário matheus excluiu a viagem de id 1234.
+2026/01/24 - 22:23:19,O usuário logou-se como "matheus" com sucesso!
+2026/01/24 - 22:23:19,O usuário matheus excluiu a viagem de id 1234.
+2026/01/24 - 22:24:13,O usuário logou-se como "matheus" com sucesso!
+2026/01/24 - 22:24:13,O usuário matheus tentou excluir a viagem de id 99999, porém não foram encontradas viagens com este id.
+2026/01/24 - 22:24:33,O usuário logou-se como "matheus" com sucesso!
+2026/01/24 - 22:24:33,O usuário matheus excluiu a viagem de id 1234.

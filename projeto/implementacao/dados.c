@@ -323,7 +323,7 @@ bool editarItem(No *inicio, char *usuario)
     return true;
 }
 
-void excluirViagem(No **inicio)
+void excluirViagem(No **inicio, char *usuario)
 {
     if (!*inicio)
     {
@@ -360,6 +360,7 @@ void excluirViagem(No **inicio)
     if (!atual)
     {
         printf("\n=== Voo nao encontrado ===\n");
+        registrarLog(usuario, EXC_ITEM, (LOG_DADOS) {.info_exc = {idAlvo, false}});
         esperar(3000);
         return;
     }
@@ -393,7 +394,7 @@ void excluirViagem(No **inicio)
         }
         fclose(arquivo);
         printf("\n[SUCESSO] Registro removido e base atualizada!\n");
-        // inserir log aqui
+        registrarLog(usuario, EXC_ITEM, (LOG_DADOS) {.info_exc = {idAlvo, true}});
     }
     else
     {
