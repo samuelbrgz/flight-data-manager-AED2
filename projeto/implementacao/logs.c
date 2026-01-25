@@ -93,6 +93,25 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
                 ); 
             }
             break;
+        case EXC_ITEM:
+            if (dados.info_exc.status) {
+                snprintf(
+                    msg,
+                    sizeof(msg),
+                    "O usuário %s excluiu a viagem de id %d.\n",
+                    usuario,
+                    dados.info_exc.id
+                );
+            } else {
+                snprintf(
+                    msg,
+                    sizeof(msg),
+                    "O usuário %s tentou excluir a viagem de id %d, porém não foram encontradas viagens com este id.\n",
+                    usuario,
+                    dados.info_exc.id
+                );
+            }
+            break;
         case ENCERRAR:
             snprintf(msg, sizeof(msg), "O usuário %s encerrou o programa.\n", usuario);
             break;
