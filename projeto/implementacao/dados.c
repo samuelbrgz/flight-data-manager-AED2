@@ -156,6 +156,11 @@ void cadastrarViagem(No **inicio, char *usuario)
 
 void listarItem(No *inicio, char *usuario)
 {
+    printf("\n=================================\n");
+    printf("         LISTAR REGISTROS     \n");
+    printf("=================================\n");
+
+
     No *atual = inicio;
     int posicao = 0;
 
@@ -180,13 +185,14 @@ void listarItem(No *inicio, char *usuario)
 
     registrarLog(usuario, LIS_ITEM, (LOG_DADOS){0});
     registrarSaida(SAIDA_LIS_ITEM, (SAIDA_DADOS){.info_lis = inicio});
-    esperar(5000);
+    printf("=================================\n");
+    esperar(3000);
 }
 
 No *pesquisarItem(No *inicio, char *usuario)
 {
     No *atual = inicio;
-    char pesquisar[10];
+    int pesquisar;
 
     VIAGEM viagem;
     bool viagemEncontrada = false;
@@ -195,12 +201,13 @@ No *pesquisarItem(No *inicio, char *usuario)
     LOG_DADOS pesquisa;
     pesquisa.info_pesq.status = false;
 
-    printf("\n===== Pesquisar Viagem =====\nCódigo do voo: ");
-    fgets(pesquisar, sizeof(pesquisar), stdin);
-    pesquisar[strcspn(pesquisar, "\n")] = '\0';
-    strcpy(pesquisa.info_pesq.codigo, pesquisar);
-
-    while (atual != NULL && strcmp(pesquisar, atual->dado.codigo_voo) != 0)
+    printf("\n=================================\n");
+    printf("        PESQUISAR VIAGEM         \n");
+    printf("=================================\n");
+    printf("ID:");
+    scanf("%d", &pesquisar);
+    pesquisa.info_pesq.id = pesquisar;
+    while (atual != NULL && pesquisar != atual->dado.id)
     {
         atual = atual->proximo;
     }
@@ -208,7 +215,7 @@ No *pesquisarItem(No *inicio, char *usuario)
     if (atual != NULL)
     {
         printf(
-            "\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n",
+            "\n======= VIAGEM ENCONTRADA =======\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n",
             atual->dado.id,
             atual->dado.origem,
             atual->dado.destino,
@@ -221,6 +228,7 @@ No *pesquisarItem(No *inicio, char *usuario)
 
         registrarLog(usuario, PESQ_ITEM, pesquisa);
         registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
+        printf("=================================\n");
         esperar(3000);
 
         return atual;
@@ -229,7 +237,7 @@ No *pesquisarItem(No *inicio, char *usuario)
     printf("\n===Voo não encontrado===\n");
     registrarLog(usuario, PESQ_ITEM, pesquisa);
     registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
-
+    printf("===================================\n");
     esperar(3000);
     return NULL;
 }
