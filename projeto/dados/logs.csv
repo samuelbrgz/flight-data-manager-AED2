@@ -117,3 +117,20 @@
 2026/01/25 - 10:23:01,O usuário matheus tentou excluir a viagem de id 99999, porém não foram encontradas viagens com este id.
 2026/01/25 - 10:24:46,O usuário logou-se como "matheus" com sucesso!
 2026/01/25 - 10:24:46,O usuário matheus excluiu a viagem de id 1234.
+2026/01/26 - 18:40:19,O usuário logou-se como "ennes" com sucesso!
+2026/01/26 - 18:40:19,O usuário ennes listou todas as viagens.
+2026/01/26 - 18:57:31,O usuário logou-se como "Luciano_Tadeu" com sucesso!
+2026/01/26 - 18:58:05,O usuário Luciano_Tadeu cadastrou uma nova viagem com o id 1.
+2026/01/26 - 18:58:18,O usuário Luciano_Tadeu listou todas as viagens.
+2026/01/26 - 18:59:24,O usuário Luciano_Tadeu procurou pela viagem de código "a". A viagem foi encontrada com sucesso!
+2026/01/26 - 18:59:40,O usuário Luciano_Tadeu procurou pela viagem de código "0". Nenhum resultado encontrado.
+2026/01/26 - 19:00:10,O usuário Luciano_Tadeu procurou pela viagem de código "a". A viagem foi encontrada com sucesso!
+2026/01/26 - 19:00:35,O usuário Luciano_Tadeu editou a viagem de código "b".
+2026/01/26 - 19:00:57,O usuário Luciano_Tadeu encerrou o programa.
+2026/01/26 - 19:01:16,O usuário logou-se como "Luciano_Tadeu" com sucesso!
+2026/01/26 - 19:01:21,O usuário Luciano_Tadeu procurou pela viagem de código "a". Nenhum resultado encontrado.
+2026/01/26 - 19:01:44,O usuário Luciano_Tadeu procurou pela viagem de código "22". Nenhum resultado encontrado.
+2026/01/26 - 19:03:16,O usuário Luciano_Tadeu procurou pela viagem de código "1234". Nenhum resultado encontrado.
+2026/01/26 - 19:03:33,O usuário Luciano_Tadeu procurou pela viagem de código "minas2". Nenhum resultado encontrado.
+2026/01/26 - 19:03:43,O usuário Luciano_Tadeu procurou pela viagem de código "ABC123". A viagem foi encontrada com sucesso!
+2026/01/26 - 19:04:33,O usuário Luciano_Tadeu editou a viagem de código "ABC123".
