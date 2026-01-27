@@ -6,11 +6,21 @@
 #include "logs.h"
 
 // include para poder criar uma funçao sleep q funcione tanto em windows, quanto em linux
+// include para a função isatty
 #ifdef _WIN64
 #include <windows.h>
+#include <io.h>
 #elif __linux__
 #include <unistd.h>
 #endif
+
+int funcaoIsatty() {
+    #ifdef _WIN64
+    return _isatty(STDIN_FILENO);
+    #elif __linux__
+    return isatty(STDIN_FILENO);
+    #endif
+}
 
 void esperar(int ms)
 {
