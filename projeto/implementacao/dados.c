@@ -156,6 +156,11 @@ void cadastrarViagem(No **inicio, char *usuario)
 
 void listarItem(No *inicio, char *usuario)
 {
+    printf("\n=================================\n");
+    printf("         LISTAR REGISTROS     \n");
+    printf("=================================\n");
+
+
     No *atual = inicio;
     int posicao = 0;
 
@@ -180,13 +185,13 @@ void listarItem(No *inicio, char *usuario)
 
     registrarLog(usuario, LIS_ITEM, (LOG_DADOS){0});
     registrarSaida(SAIDA_LIS_ITEM, (SAIDA_DADOS){.info_lis = inicio});
-    esperar(5000);
+    printf("=================================\n");
+    esperar(3000);
 }
 
 No *pesquisarItem(No *inicio, char *usuario)
 {
     No *atual = inicio;
-    char pesquisar[10];
 
     VIAGEM viagem;
     bool viagemEncontrada = false;
@@ -195,12 +200,22 @@ No *pesquisarItem(No *inicio, char *usuario)
     LOG_DADOS pesquisa;
     pesquisa.info_pesq.status = false;
 
-    printf("\n===== Pesquisar Viagem =====\nCódigo do voo: ");
-    fgets(pesquisar, sizeof(pesquisar), stdin);
-    pesquisar[strcspn(pesquisar, "\n")] = '\0';
-    strcpy(pesquisa.info_pesq.codigo, pesquisar);
+    printf("\n=================================\n");
+    printf("        PESQUISAR VIAGEM         \n");
+    printf("=================================\n");
+    printf("ID da Viagem: ");
 
-    while (atual != NULL && strcmp(pesquisar, atual->dado.codigo_voo) != 0)
+    char buffer[32];
+    int pesquisar;
+    fgets(buffer, sizeof(buffer), stdin);
+    if (sscanf(buffer, "%d", &pesquisar) != 1)
+    {
+        printf("\n[ERRO] Entrada invalida.\n");
+        return NULL;
+    }
+
+    pesquisa.info_pesq.id = pesquisar;
+    while (atual != NULL && pesquisar != atual->dado.id)
     {
         atual = atual->proximo;
     }
@@ -208,11 +223,11 @@ No *pesquisarItem(No *inicio, char *usuario)
     if (atual != NULL)
     {
         printf(
-            "\n===Voo encontrado===\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n",
+            "\n======= VIAGEM ENCONTRADA =======\nID da Viagem: %d\nCodigo do voo: %s\nOrigem: %s\nDestino: %s \n",
             atual->dado.id,
+            atual->dado.codigo_voo,
             atual->dado.origem,
-            atual->dado.destino,
-            atual->dado.codigo_voo);
+            atual->dado.destino);
 
         viagem = atual->dado;
         viagemEncontrada = true;
@@ -221,6 +236,7 @@ No *pesquisarItem(No *inicio, char *usuario)
 
         registrarLog(usuario, PESQ_ITEM, pesquisa);
         registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
+        printf("=================================\n");
         esperar(3000);
 
         return atual;
@@ -229,7 +245,7 @@ No *pesquisarItem(No *inicio, char *usuario)
     printf("\n===Voo não encontrado===\n");
     registrarLog(usuario, PESQ_ITEM, pesquisa);
     registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
-
+    printf("===================================\n");
     esperar(3000);
     return NULL;
 }
@@ -250,8 +266,10 @@ bool editarItem(No *inicio, char *usuario)
     LOG_DADOS info;
     info.info_edit.status = false;
 
-    printf("\nDigite os novos valores:\n");
-    printf("ID: ");
+    printf("\n===================================\n");
+    printf("       EDICAO DE VIAGEM          \n");
+    printf("===================================\n");
+    printf("ID da Viagem: ");
     scanf("%d", &viagemEditada.id);
     getchar();
 
@@ -269,17 +287,17 @@ bool editarItem(No *inicio, char *usuario)
         }
     }
 
-    printf("\nCódigo de Vôo: ");
+    printf("Codigo do Voo: ");
     fgets(buffer, sizeof(buffer), stdin);
     buffer[strcspn(buffer, "\r\n")] = '\0';
     strcpy(viagemEditada.codigo_voo, buffer);
 
-    printf("\nOrigem: ");
+    printf("Origem: ");
     fgets(buffer, sizeof(buffer), stdin);
     buffer[strcspn(buffer, "\r\n")] = '\0';
     strcpy(viagemEditada.origem, buffer);
 
-    printf("\nDestino: ");
+    printf("Destino: ");
     fgets(buffer, sizeof(buffer), stdin);
     buffer[strcspn(buffer, "\r\n")] = '\0';
     strcpy(viagemEditada.destino, buffer);

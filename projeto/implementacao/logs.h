@@ -29,7 +29,7 @@ typedef struct {
 // } LOG_TIPO_LIS_ITEM;
 
 typedef struct {
-    char codigo[10];
+    int id;
     bool status;
 } LOG_TIPO_PESQ_ITEM;
 

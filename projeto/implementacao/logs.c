@@ -59,17 +59,17 @@ void registrarLog(char *usuario, LOG_TIPOS tipo, LOG_DADOS dados) {
                 snprintf(
                     msg, 
                     sizeof(msg), 
-                    "O usuário %s procurou pela viagem de código \"%s\". A viagem foi encontrada com sucesso!\n", 
+                    "O usuário %s procurou pela viagem de ID %d. A viagem foi encontrada com sucesso!\n", 
                     usuario, 
-                    dados.info_pesq.codigo
+                    dados.info_pesq.id
                 );
             } else {
                 snprintf(
                     msg, 
                     sizeof(msg), 
-                    "O usuário %s procurou pela viagem de código \"%s\". Nenhum resultado encontrado.\n", 
+                    "O usuário %s procurou pela viagem de ID %d. Nenhum resultado encontrado.\n", 
                     usuario, 
-                    dados.info_pesq.codigo
+                    dados.info_pesq.id
                 );
             }
             break;
