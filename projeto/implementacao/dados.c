@@ -110,7 +110,7 @@ void cadastrarViagem(No **inicio, char *usuario)
             (LOG_DADOS){
                 .info_add = {
                     nova.id,
-                    "Id Duplicado",
+                    "ID Duplicado",
                     false}});
         printf("===================================\n");
         return;
@@ -180,7 +180,7 @@ void listarItem(No *inicio, char *usuario)
 
     if (posicao == 0)
     {
-        printf("\n===Sem registros na lista===\n");
+        printf("\n==== Sem registros na lista =====\n");
     }
 
     registrarLog(usuario, LIS_ITEM, (LOG_DADOS){0});
@@ -196,10 +196,6 @@ No *pesquisarItem(No *inicio, char *usuario)
     VIAGEM viagem;
     bool viagemEncontrada = false;
 
-    // Necessário para printar o código no log
-    LOG_DADOS pesquisa;
-    pesquisa.info_pesq.status = false;
-
     printf("\n=================================\n");
     printf("        PESQUISAR VIAGEM         \n");
     printf("=================================\n");
@@ -214,7 +210,6 @@ No *pesquisarItem(No *inicio, char *usuario)
         return NULL;
     }
 
-    pesquisa.info_pesq.id = pesquisar;
     while (atual != NULL && pesquisar != atual->dado.id)
     {
         atual = atual->proximo;
@@ -232,9 +227,7 @@ No *pesquisarItem(No *inicio, char *usuario)
         viagem = atual->dado;
         viagemEncontrada = true;
 
-        pesquisa.info_pesq.status = viagemEncontrada;
-
-        registrarLog(usuario, PESQ_ITEM, pesquisa);
+        registrarLog(usuario, PESQ_ITEM, (LOG_DADOS) {.info_pesq = {viagem.id, true}});
         registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
         printf("=================================\n");
         esperar(3000);
@@ -242,10 +235,10 @@ No *pesquisarItem(No *inicio, char *usuario)
         return atual;
     }
 
-    printf("\n===Voo não encontrado===\n");
-    registrarLog(usuario, PESQ_ITEM, pesquisa);
+    printf("\n====== Voo nao encontrado =======\n");
+    registrarLog(usuario, PESQ_ITEM, (LOG_DADOS) {.info_pesq = {viagem.id, false}});
     registrarSaida(SAIDA_PESQ_ITEM, (SAIDA_DADOS){.info_pesq = {viagem, viagemEncontrada}});
-    printf("===================================\n");
+    printf("=================================\n");
     esperar(3000);
     return NULL;
 }
@@ -280,7 +273,7 @@ bool editarItem(No *inicio, char *usuario)
             printf("\n[AVISO] O ID %d ja esta em uso.\n", viagemEditada.id);
 
             info.info_edit.id = viagemEditada.id;
-            info.info_edit.motivoDeFalha = "Id Duplicado";
+            info.info_edit.motivoDeFalha = "ID Duplicado";
 
             registrarLog(usuario, EDIT_ITEM, info);
             return false;
@@ -349,9 +342,9 @@ void excluirViagem(No **inicio, char *usuario)
         return;
     }
 
-    printf("\n===================================\n");
+    printf("\n=================================\n");
     printf("       EXCLUSAO DE VIAGEM          \n");
-    printf("===================================\n");
+    printf("=================================\n");
 
     printf("Digite o ID da viagem que deseja remover: ");
 
@@ -377,7 +370,7 @@ void excluirViagem(No **inicio, char *usuario)
     // ID nao encontrado
     if (!atual)
     {
-        printf("\n=== Voo nao encontrado ===\n");
+        printf("\n====== Voo nao encontrado =======\n");
         registrarLog(usuario, EXC_ITEM, (LOG_DADOS) {.info_exc = {idAlvo, false}});
         esperar(3000);
         return;

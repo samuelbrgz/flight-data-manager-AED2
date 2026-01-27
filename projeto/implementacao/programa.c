@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <string.h>
+#include <unistd.h>
 #include "autenticacao.h"
 #include "logs.h"
 #include "dados.h"
@@ -21,11 +21,11 @@ int main(void)
     do
     {
         usuario = login(); // função de autenticação em autenticacao.c
-        if(strcmp(usuario.usuario, "usuario_incorreto") == 0){
-            return 0;
-        }
+        if (!isatty(STDIN_FILENO) && !usuario.status) exit(0); // verificação se o arquivo foi executado
+                                                                          // no modo input interativo, ou via .txt
+                                                                          // caso seja via .txt para a execução ao errar login
     } while (!usuario.status);
-
+    
     // menu
 
     while (escolha != 6)
