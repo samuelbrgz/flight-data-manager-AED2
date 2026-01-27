@@ -13,6 +13,11 @@ int main(void)
     int escolha = 0;
 
     Validar usuario; // puxar o usuário da sessão por aqui
+
+    printf("\n=============================================\n");
+    printf("       PROGRAMA DE TRANSPORTE AEREO          \n");
+    printf("=============================================\n");
+
     do
     {
         usuario = login(); // função de autenticação em autenticacao.c

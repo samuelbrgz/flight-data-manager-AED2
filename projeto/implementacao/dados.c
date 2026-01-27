@@ -192,7 +192,6 @@ void listarItem(No *inicio, char *usuario)
 No *pesquisarItem(No *inicio, char *usuario)
 {
     No *atual = inicio;
-    int pesquisar;
 
     VIAGEM viagem;
     bool viagemEncontrada = false;
@@ -204,8 +203,17 @@ No *pesquisarItem(No *inicio, char *usuario)
     printf("\n=================================\n");
     printf("        PESQUISAR VIAGEM         \n");
     printf("=================================\n");
-    printf("ID:");
-    scanf("%d", &pesquisar);
+    printf("ID da Viagem: ");
+
+    char buffer[32];
+    int pesquisar;
+    fgets(buffer, sizeof(buffer), stdin);
+    if (sscanf(buffer, "%d", &pesquisar) != 1)
+    {
+        printf("\n[ERRO] Entrada invalida.\n");
+        return NULL;
+    }
+
     pesquisa.info_pesq.id = pesquisar;
     while (atual != NULL && pesquisar != atual->dado.id)
     {
@@ -215,11 +223,11 @@ No *pesquisarItem(No *inicio, char *usuario)
     if (atual != NULL)
     {
         printf(
-            "\n======= VIAGEM ENCONTRADA =======\nID:%d\nOrigem: %s\nDestino: %s \nCodigo: %s\n",
+            "\n======= VIAGEM ENCONTRADA =======\nID da Viagem: %d\nCodigo do voo: %s\nOrigem: %s\nDestino: %s \n",
             atual->dado.id,
+            atual->dado.codigo_voo,
             atual->dado.origem,
-            atual->dado.destino,
-            atual->dado.codigo_voo);
+            atual->dado.destino);
 
         viagem = atual->dado;
         viagemEncontrada = true;
@@ -258,8 +266,10 @@ bool editarItem(No *inicio, char *usuario)
     LOG_DADOS info;
     info.info_edit.status = false;
 
-    printf("\nDigite os novos valores:\n");
-    printf("ID: ");
+    printf("\n===================================\n");
+    printf("       EDICAO DE VIAGEM          \n");
+    printf("===================================\n");
+    printf("ID da Viagem: ");
     scanf("%d", &viagemEditada.id);
     getchar();
 
@@ -277,17 +287,17 @@ bool editarItem(No *inicio, char *usuario)
         }
     }
 
-    printf("\nCódigo de Vôo: ");
+    printf("Codigo do Voo: ");
     fgets(buffer, sizeof(buffer), stdin);
     buffer[strcspn(buffer, "\r\n")] = '\0';
     strcpy(viagemEditada.codigo_voo, buffer);
 
-    printf("\nOrigem: ");
+    printf("Origem: ");
     fgets(buffer, sizeof(buffer), stdin);
     buffer[strcspn(buffer, "\r\n")] = '\0';
     strcpy(viagemEditada.origem, buffer);
 
-    printf("\nDestino: ");
+    printf("Destino: ");
     fgets(buffer, sizeof(buffer), stdin);
     buffer[strcspn(buffer, "\r\n")] = '\0';
     strcpy(viagemEditada.destino, buffer);

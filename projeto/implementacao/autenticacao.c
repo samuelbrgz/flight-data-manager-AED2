@@ -21,7 +21,7 @@ Validar login(){
 
     FILE *fp = fopen("../dados/usuarios.csv", "r"); // arquivo csv está em outra pasta
     if (!fp) {
-        printf("Erro ao abrir o arquivo para leitura.\n");
+        printf("[ERRO] Nao foi possivel abrir o arquivo para leitura.\n");
         return validar;
     }
     
@@ -37,7 +37,7 @@ Validar login(){
 
     if (validar.status == false)
     {
-        printf("\nLogin ou senha incorretos...\n");
+        printf("\n[AVISO] Login ou senha incorretos...\n\n");
         registrarLog(validar.usuario, AUTENTICACAO, (LOG_DADOS){.info_auth = validar.status});
     }
     else
