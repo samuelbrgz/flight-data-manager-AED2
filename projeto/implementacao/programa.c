@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include "autenticacao.h"
 #include "logs.h"
 #include "dados.h"
@@ -21,9 +20,9 @@ int main(void)
     do
     {
         usuario = login(); // função de autenticação em autenticacao.c
-        if (!isatty(STDIN_FILENO) && !usuario.status) exit(0); // verificação se o arquivo foi executado
-                                                                          // no modo input interativo, ou via .txt
-                                                                          // caso seja via .txt para a execução ao errar login
+        if (!funcaoIsatty() && !usuario.status) exit(0); // verificação se o arquivo foi executado
+                                                                // no modo input interativo, ou via .txt
+                                                                // caso seja via .txt para a execução ao errar login
     } while (!usuario.status);
     
     // menu
@@ -59,6 +58,18 @@ int main(void)
             break;
 
         case 2:
+            // especifico para casos de testes
+            if (!funcaoIsatty()) {
+                int listaVazia;  // 1 = lista vazia
+                                 // 0 = lista preenchida
+
+                scanf("%d", &listaVazia);
+                
+                if (listaVazia == 1) {
+                    liberarLista(&lista);
+                }
+            }
+
             listarItem(lista, usuario.usuario);
             break;
 
